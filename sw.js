@@ -4,7 +4,7 @@
    - Eigene App-Dateien: "Netzwerk zuerst" (so landen Updates sofort), Cache als Offline-Fallback.
    - Fremd-Dateien (Tailwind-CDN, Schriften, OpenCV): "Cache zuerst" (schnell + offline). */
 
-const CACHE = 'picnote-v51';
+const CACHE = 'picnote-v72';
 const CORE = [
   './',
   './index.html',
