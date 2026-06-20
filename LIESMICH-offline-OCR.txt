@@ -1,0 +1,51 @@
+PicNote Vault — OCR komplett offline machen
+=============================================
+
+Die App lädt OCR jetzt ZUERST aus diesem Ordner (./tess/).
+Lege die folgenden Dateien EINMAL hier hinein – danach braucht die
+Texterkennung NIE Internet (auch nicht beim ersten Mal).
+Fehlt etwas, nutzt die App automatisch wieder das Internet (CDN).
+
+Alle Dateien gehören direkt in diesen Ordner "tess" (keine Unterordner).
+
+1) Programm-Dateien (Pflicht) — von jsDelivr:
+   - tesseract.min.js
+     https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/tesseract.min.js
+   - worker.min.js
+     https://cdn.jsdelivr.net/npm/tesseract.js@5.1.1/dist/worker.min.js
+
+2) Engine/WASM (Pflicht) — von jsDelivr (Paket tesseract.js-core@5.0.0):
+   - tesseract-core-simd.wasm.js
+     https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0/tesseract-core-simd.wasm.js
+   - tesseract-core-simd.wasm
+     https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0/tesseract-core-simd.wasm
+   (Empfohlen zusätzlich als Rückfall für ältere Geräte:)
+   - tesseract-core.wasm.js
+     https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0/tesseract-core.wasm.js
+   - tesseract-core.wasm
+     https://cdn.jsdelivr.net/npm/tesseract.js-core@5.0.0/tesseract-core.wasm
+
+3) Sprachdaten (je Sprache eine Datei, ~1–2 MB) — von tessdata (schnelle Modelle):
+   - Deutsch:     deu.traineddata.gz
+     https://tessdata.projectnaptha.com/4.0.0_fast/deu.traineddata.gz
+   - Englisch:    eng.traineddata.gz
+     https://tessdata.projectnaptha.com/4.0.0_fast/eng.traineddata.gz
+   Weitere Sprachen optional (einfach zusätzlich hierher legen):
+   - Italienisch: ita.traineddata.gz   (…/4.0.0_fast/ita.traineddata.gz)
+   - Spanisch:    spa.traineddata.gz   (…/4.0.0_fast/spa.traineddata.gz)
+   - Französisch: fra.traineddata.gz   (…/4.0.0_fast/fra.traineddata.gz)
+   Liste aller Sprachen: https://tessdata.projectnaptha.com/4.0.0_fast/
+
+Welche Sprache nimmt die App?
+- Sie nutzt die eingestellte App-Sprache + Englisch.
+  (Deutsch -> deu + eng, Italienisch -> ita + eng, usw.)
+- Lege also mindestens deu.traineddata.gz UND eng.traineddata.gz hierher.
+
+Danach:
+- Ordner "tess" mit ins Hosting-Paket (Netlify) hochladen bzw. in die ZIP packen.
+- Einmal die Seite öffnen, damit der Service Worker alles cacht.
+- Fertig: OCR läuft nun vollständig offline und ohne Server.
+
+Hinweis: Die Texterkennung lief schon immer lokal auf dem Gerät – deine
+Dokumente werden nie hochgeladen. Mit diesen Dateien entfällt nur noch der
+einmalige Download der Engine/Sprachen.
